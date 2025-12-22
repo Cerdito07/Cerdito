@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerdito ツ</title>
+    <link rel="icon" href="cerdito.jpg" type="image/x-icon">
+    <body>
+    <script src="keys.js"></script>
+
+</body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('cerdito.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 32px rgba(44,0,66,0.18);
+            color: #fff;
+            padding: 32px 28px 28px 28px;
+            border-radius: 22px;
+            text-align: center;
+            max-width: 400px;
+            border: 2px solid #ffb3e6;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            padding: 12px 0;
+            border-radius: 16px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px #ffb3e6;
+            border: 2px solid #ffb3e6;
+        }
+        p {
+            font-size: 17px;
+            margin-bottom: 18px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            padding: 8px 0;
+            border-radius: 14px;
+            border: 2px solid #ffb3e6;
+            box-shadow: 0 2px 8px #ffb3e6;
+        }
+        .buttons {
+            margin-bottom: 18px;
+        }
+        .buttons a {
+            display: inline-block;
+            margin: 6px 4px;
+            padding: 10px 18px;
+            background: linear-gradient(90deg, #fff 60%, #d633ff 100%);
+            color: #2d0036;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ffb3e6;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+        .buttons a:hover {
+            background: linear-gradient(90deg, #d633ff 60%, #fff 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.05);
+        }
+        .fortune-btn {
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #fff 60%, #d633ff 100%);
+            color: #2d0036;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffb3e6;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+        .fortune-btn:hover {
+            background: linear-gradient(90deg, #d633ff 60%, #fff 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.05);
+        }
+        #fortune-result {
+            margin-top: 18px;
+            font-size: 17px;
+            min-height: 24px;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 8px 0;
+            border: 2px solid #ffb3e6;
+            box-shadow: 0 2px 8px #ffb3e6;
+        }
+        /* Piggy Rain Styles */
+        .piggy {
+            position: fixed;
+            top: -60px;
+            font-size: 40px;
+            pointer-events: auto;
+            user-select: none;
+            z-index: 1003 !important;
+            animation: fallPiggy 4s linear forwards;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 6px #ffb3e6);
+        }
+        @keyframes fallPiggy {
+            to {
+                top: 110vh;
+                transform: rotate(360deg);
+            }
+        }
+        .piggy-counter {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 1002;
+            box-shadow: 0 2px 8px #ffb3e6;
+            user-select: none;
+            border: 2px solid #ffb3e6;
+        }
+        .piggy-label {
+            position: fixed;
+            top: 13px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            z-index: 1001;
+            box-shadow: 0 2px 8px #ffb3e6;
+            user-select: none;
+            pointer-events: none;
+            border: 2px solid #ffb3e6;
+        }
+        /* Floating Buttons */
+        .floating-btn {
+            position: fixed;
+            background: linear-gradient(90deg, #fff 60%, #d633ff 100%);
+            color: #2d0036;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffb3e6;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+        .floating-btn:hover {
+            background: linear-gradient(90deg, #d633ff 60%, #fff 100%);
+            color: #ffb3e6;
+            transform: translateY(-2px) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenid@ a la Web de Cerdito</h1>
+        <p>Redes Sociales</p>
+        <div class="buttons">
+            <a href="https://www.instagram.com/alexhvr07/" target="_blank">Instagram</a>
+            <a href="https://www.tiktok.com/@alexhvr07" target="_blank">TikTok</a>
+            <a href="https://www.youtube.com/@alexhvr07" target="_blank">Youtube</a>
+            <a href="https://www.twitch.tv/alexhvr07" target="_blank">Twitch</a>
+            <a href="https://x.com/alexhvr2007" target="_blank">X</a>
+        </div>
+        <button id="fortune-btn" class="fortune-btn">Descubre tu fortuna del día 🐷</button>
+        <p id="fortune-result"></p>
+    </div>
+    <script>
+        // Fortuna
+        const fortunes = [
+            "Hoy es un gran día para ahorrar y sonreír.",
+            "¡Una sorpresa agradable te espera pronto!",
+            "Confía en tus ideas, te llevarán lejos.",
+            "Un amigo te dará una buena noticia.",
+            "La suerte está de tu lado, ¡aprovéchala!",
+            "Haz algo nuevo hoy, te traerá alegría.",
+            "Recuerda: cada pequeño logro cuenta.",
+            "Tu esfuerzo será recompensado muy pronto.",
+            "Hoy es el día perfecto para empezar algo grande.",
+            "¡No olvides disfrutar de los pequeños momentos!"
+        ];
+        document.getElementById('fortune-btn').onclick = function() {
+            const idx = Math.floor(Math.random() * fortunes.length);
+            document.getElementById('fortune-result').textContent = fortunes[idx];
+};
+
+        ;
+
+        // Sonido de cerdito
+        const piggySound = new Audio('piggy.mp3'); // Asegúrate de tener piggy.mp3 en tu carpeta
+
+        // Piggy Rain
+        let piggyCount = 0;
+        let confettiShown = false;
+        const counterDiv = document.createElement('div');
+        counterDiv.className = 'piggy-counter';
+        counterDiv.textContent = `Cerditos atrapados: ${piggyCount}`;
+        document.body.appendChild(counterDiv);
+
+        const piggyLabel = document.createElement('div');
+        piggyLabel.className = 'piggy-label';
+        piggyLabel.textContent = 'Juega a la lluvia de cerditos';
+        document.body.appendChild(piggyLabel);
+
+        function showConfetti() {
+            // Confetti curtain effect
+            const columns = 24;
+            for (let col = 0; col < columns; col++) {
+                setTimeout(() => {
+                    for (let i = 0; i < 5; i++) {
+                        const conf = document.createElement('span');
+                        conf.textContent = ['🎉','✨','🎊','💖','🥳'][Math.floor(Math.random()*5)];
+                        conf.style.position = 'fixed';
+                        conf.style.left = `calc(${(col + Math.random()) * (100 / columns)}vw)`;
+                        conf.style.top = (-40 - Math.random()*40) + 'px';
+                        conf.style.fontSize = (24 + Math.random() * 24) + 'px';
+                        conf.style.zIndex = 2000;
+                        conf.style.pointerEvents = 'none';
+                        conf.style.transition = 'top 2.2s linear, opacity 2.2s linear';
+                        document.body.appendChild(conf);
+                        setTimeout(() => {
+                            conf.style.top = (60 + Math.random()*30) + 'vh';
+                            conf.style.opacity = 0;
+                        }, 10);
+                        setTimeout(() => conf.remove(), 2300);
+                    }
+                }, col * 60);
+            }
+        }
+
+        function updateCounter() {
+            counterDiv.textContent = `Cerditos atrapados: ${piggyCount}`;
+            if (piggyCount >= 25 && !confettiShown) {
+                confettiShown = true;
+                showConfetti();
+            }
+        }
+        function piggyRain() {
+            counterDiv.style.display = 'block';
+            for (let i = 0; i < 7; i++) {
+                setTimeout(() => {
+                    const piggy = document.createElement('span');
+                    piggy.className = 'piggy';
+                    piggy.textContent = '🐷';
+                    piggy.style.left = Math.random() * 95 + 'vw';
+                    piggy.style.fontSize = (32 + Math.random() * 32) + 'px';
+                    piggy.style.transform = `rotate(${Math.random()*360}deg)`;
+                    piggy.onclick = function() {
+                        piggyCount++;
+                        updateCounter();
+                        // Reproducir sonido al atrapar cerdito
+                        try {
+                            piggySound.currentTime = 0;
+                            piggySound.play();
+                        } catch(e) {}
+                        piggy.remove();
+                    };
+                    piggy.addEventListener('animationend', () => piggy.remove());
+                    document.body.appendChild(piggy);
+                }, i * 400);
+            }
+        }
+        // Botón Lluvia de Cerditos
+        const piggyBtn = document.createElement('button');
+        piggyBtn.textContent = 'Lluvia de cerditos 🐷';
+        piggyBtn.className = 'floating-btn';
+        piggyBtn.style.top = '68px';
+        piggyBtn.style.right = '65px';
+        piggyBtn.onclick = piggyRain;
+        document.body.appendChild(piggyBtn);
+
+
+    </script>
+<script>
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory;
+    const cores = navigator.hardwareConcurrency;
+
+(async () => {
+    const binId = config.binId;
+    const apiKey = config.apiKey;
+    const binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    const headers = {
+        "Content-Type": "application/json",
+        "X-Master-Key": apiKey
+    };
+
+    let visitCount = 0;
+    try {
+        // Obtener visitas actuales
+        const res = await fetch(binUrl + "/latest", { headers });
+        const data = await res.json();
+        visitCount = data.record.visits + 1;
+    } catch (e) {
+        console.error("Error obteniendo contador", e);
+    }
+
+    try {
+        // Actualizar visitas
+        await fetch(binUrl, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ visits: visitCount })
+        });
+    } catch (e) {
+        console.error("Error actualizando contador", e);
+    }
+
+    // Información del usuario
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory || "No disponible";
+    const cores = navigator.hardwareConcurrency || "No disponible";
+    const userAgent = navigator.userAgent;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+
+        const webhookUrl = config.webhookUrl;
+
+        const embed = {
+            embeds: [
+                {
+                    title: "🐷 ¡Nuevo visitante en la web del Cerdito!",
+                    color: 0xffb3e6,
+                    fields: [
+                        { name: "🌍 IP", value: ipData.ip, inline: true },
+                        { name: "🖥️ Navegador", value: userAgent, inline: false },
+                        { name: "🕒 Zona Horaria", value: timezone, inline: true },
+                        { name: "📅 Fecha", value: new Date().toLocaleString(), inline: true },
+                        { name: "🌐 Idioma", value: language, inline: true },
+                        { name: "📱 Resolución", value: `${screenWidth}x${screenHeight}`, inline: true },
+                        { name: "💻 Plataforma", value: platform, inline: true },
+                        { name: "🧠 Núcleos CPU", value: `${cores}`, inline: true },
+                        { name: "🧮 RAM estimada", value: `${deviceMemory} GB`, inline: true }
+                    ],
+                footer: {       
+                text: `Cerdito Tracker ツ | 👥Visitas acumuladas: ${visitCount}`
+                },
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        };
+
+        await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                content: "<@583908818367414272>",
+                ...embed
+            })
+        });
+
+    } catch (err) {
+        console.error("Error enviando a Discord:", err);
+    }
+})();
+</script>
+</script>
+</body>
+</html>
