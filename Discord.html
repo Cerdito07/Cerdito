@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="1.jpg" type="image/x-icon">
+    <title>𝑇𝑒 𝑄𝑢𝑖𝑒𝑟𝑜 ♥</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000000;
+        }
+        
+        img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <img src="1.gif" alt="GIF">
+
+    <audio id="audio" autoplay loop>
+        <source src="WO OH OH.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(250, 110, 255, 0.8); padding: 15px; border-radius: 8px; z-index: 999;">
+        <label for="volumeControl" style="color: #ffffff; margin-right: 10px;">Volumen:</label>
+        <input type="range" id="volumeControl" min="0" max="100" value="5" style="vertical-align: middle;">
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('audio');
+            const volumeControl = document.getElementById('volumeControl');
+            
+            audio.muted = false;
+            audio.volume = 0.01;
+            audio.play();
+            
+            volumeControl.addEventListener('input', (e) => {
+                audio.volume = e.target.value / 100;
+            });
+        });
+    </script>
+</body>
+
+<script>
+    function crearCorazon() {
+        const corazon = document.createElement('div');
+        corazon.textContent = '♥';
+        corazon.style.position = 'fixed';
+        corazon.style.left = Math.random() * 100 + 'vw';
+        corazon.style.top = '-10vh';
+        corazon.style.fontSize = Math.random() * 20 + 20 + 'px';
+        corazon.style.color = 'red';
+        corazon.style.pointerEvents = 'none';
+        corazon.style.zIndex = '1';
+        corazon.style.opacity = '0.7';
+        
+        document.body.appendChild(corazon);
+        
+        let posY = -10;
+        const velocidad = Math.random() * 2 + 1;
+        
+        const interval = setInterval(() => {
+            posY += velocidad;
+            corazon.style.top = posY + 'vh';
+            
+            if (posY > 110) {
+                clearInterval(interval);
+                corazon.remove();
+            }
+        }, 30);
+    }
+    
+    setInterval(crearCorazon, 300);
+</script>
+</html>
