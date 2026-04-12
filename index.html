@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cerdito ツ</title>
-    <link rel="icon" href="cerdito.jpg" type="image/x-icon">
+    <title>𝐴𝑙𝑒𝑗𝑎𝑛𝑑𝑟𝑜</title>
+    <link rel="icon" href="1.jpg" type="image/x-icon">
     <body>
     <script src="keys.js"></script>
 
@@ -14,7 +14,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('cerdito.jpg');
+            background-image: url('1.jpg');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -177,124 +177,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenid@ a la Web de Cerdito</h1>
-        <p>Redes Sociales</p>
+        <h1>𝘉𝘪𝘦𝘯𝘷𝘦𝘯𝘪𝘥@ 𝘢 𝘭𝘢 𝘞𝘦𝘣 𝘥𝘦 𝘈𝘭𝘦𝘫𝘢𝘯𝘥𝘳𝘰</h1>
+        <p>𝘙𝘦𝘥𝘦𝘴</p>
         <div class="buttons">
-            <a href="https://www.instagram.com/alexhvr07/" target="_blank">Instagram</a>
-            <a href="https://www.tiktok.com/@alexhvr07" target="_blank">TikTok</a>
-            <a href="https://www.youtube.com/@alexhvr07" target="_blank">Youtube</a>
-            <a href="https://www.twitch.tv/alexhvr07" target="_blank">Twitch</a>
-            <a href="https://x.com/alexhvr2007" target="_blank">X</a>
+            <a href="https://www.instagram.com/alexhvr07/" target="_blank">𝘐𝘯𝘴𝘵𝘢𝘨𝘳𝘢𝘮</a>
+            <a href="https://www.tiktok.com/@alexhvr07" target="_blank">𝘛𝘪𝘬𝘛𝘰𝘬</a>
+            <a href="https://www.youtube.com/@alexhvr07" target="_blank">𝘠𝘰𝘶𝘵𝘶𝘣𝘦</a>
+            <a href="https://www.twitch.tv/alexhvr07" target="_blank">𝘛𝘸𝘪𝘵𝘤𝘩</a>
+            <a href="https://open.spotify.com/user/9ykgrdb7cleze98pwx2oeux0h?si=54a6bc76ad124287" target="_blank">𝘚𝘱𝘰𝘵𝘪𝘧𝘺</a>
         </div>
-        <button id="fortune-btn" class="fortune-btn">Descubre tu fortuna del día 🐷</button>
-        <p id="fortune-result"></p>
     </div>
-    <script>
-        // Fortuna
-        const fortunes = [
-            "Hoy es un gran día para ahorrar y sonreír.",
-            "¡Una sorpresa agradable te espera pronto!",
-            "Confía en tus ideas, te llevarán lejos.",
-            "Un amigo te dará una buena noticia.",
-            "La suerte está de tu lado, ¡aprovéchala!",
-            "Haz algo nuevo hoy, te traerá alegría.",
-            "Recuerda: cada pequeño logro cuenta.",
-            "Tu esfuerzo será recompensado muy pronto.",
-            "Hoy es el día perfecto para empezar algo grande.",
-            "¡No olvides disfrutar de los pequeños momentos!"
-        ];
-        document.getElementById('fortune-btn').onclick = function() {
-            const idx = Math.floor(Math.random() * fortunes.length);
-            document.getElementById('fortune-result').textContent = fortunes[idx];
-};
 
-        ;
-
-        // Sonido de cerdito
-        const piggySound = new Audio('piggy.mp3'); // Asegúrate de tener piggy.mp3 en tu carpeta
-
-        // Piggy Rain
-        let piggyCount = 0;
-        let confettiShown = false;
-        const counterDiv = document.createElement('div');
-        counterDiv.className = 'piggy-counter';
-        counterDiv.textContent = `Cerditos atrapados: ${piggyCount}`;
-        document.body.appendChild(counterDiv);
-
-        const piggyLabel = document.createElement('div');
-        piggyLabel.className = 'piggy-label';
-        piggyLabel.textContent = 'Juega a la lluvia de cerditos';
-        document.body.appendChild(piggyLabel);
-
-        function showConfetti() {
-            // Confetti curtain effect
-            const columns = 24;
-            for (let col = 0; col < columns; col++) {
-                setTimeout(() => {
-                    for (let i = 0; i < 5; i++) {
-                        const conf = document.createElement('span');
-                        conf.textContent = ['🎉','✨','🎊','💖','🥳'][Math.floor(Math.random()*5)];
-                        conf.style.position = 'fixed';
-                        conf.style.left = `calc(${(col + Math.random()) * (100 / columns)}vw)`;
-                        conf.style.top = (-40 - Math.random()*40) + 'px';
-                        conf.style.fontSize = (24 + Math.random() * 24) + 'px';
-                        conf.style.zIndex = 2000;
-                        conf.style.pointerEvents = 'none';
-                        conf.style.transition = 'top 2.2s linear, opacity 2.2s linear';
-                        document.body.appendChild(conf);
-                        setTimeout(() => {
-                            conf.style.top = (60 + Math.random()*30) + 'vh';
-                            conf.style.opacity = 0;
-                        }, 10);
-                        setTimeout(() => conf.remove(), 2300);
-                    }
-                }, col * 60);
-            }
-        }
-
-        function updateCounter() {
-            counterDiv.textContent = `Cerditos atrapados: ${piggyCount}`;
-            if (piggyCount >= 25 && !confettiShown) {
-                confettiShown = true;
-                showConfetti();
-            }
-        }
-        function piggyRain() {
-            counterDiv.style.display = 'block';
-            for (let i = 0; i < 7; i++) {
-                setTimeout(() => {
-                    const piggy = document.createElement('span');
-                    piggy.className = 'piggy';
-                    piggy.textContent = '🐷';
-                    piggy.style.left = Math.random() * 95 + 'vw';
-                    piggy.style.fontSize = (32 + Math.random() * 32) + 'px';
-                    piggy.style.transform = `rotate(${Math.random()*360}deg)`;
-                    piggy.onclick = function() {
-                        piggyCount++;
-                        updateCounter();
-                        // Reproducir sonido al atrapar cerdito
-                        try {
-                            piggySound.currentTime = 0;
-                            piggySound.play();
-                        } catch(e) {}
-                        piggy.remove();
-                    };
-                    piggy.addEventListener('animationend', () => piggy.remove());
-                    document.body.appendChild(piggy);
-                }, i * 400);
-            }
-        }
-        // Botón Lluvia de Cerditos
-        const piggyBtn = document.createElement('button');
-        piggyBtn.textContent = 'Lluvia de cerditos 🐷';
-        piggyBtn.className = 'floating-btn';
-        piggyBtn.style.top = '68px';
-        piggyBtn.style.right = '65px';
-        piggyBtn.onclick = piggyRain;
-        document.body.appendChild(piggyBtn);
-
-
-    </script>
 <script>
     const screenWidth = screen.width;
     const screenHeight = screen.height;
@@ -353,21 +246,21 @@
         const embed = {
             embeds: [
                 {
-                    title: "🐷 ¡Nuevo visitante en la web del Cerdito!",
+                    title: "🐷 𝘕𝘶𝘦𝘷𝘰 𝘷𝘪𝘴𝘪𝘵𝘢𝘯𝘵𝘦 𝘦𝘯 𝘭𝘢 𝘸𝘦𝘣 𝘥𝘦𝘭 𝘈𝘭𝘦𝘫𝘢𝘯𝘥𝘳𝘰",
                     color: 0xffb3e6,
                     fields: [
-                        { name: "🌍 IP", value: ipData.ip, inline: true },
-                        { name: "🖥️ Navegador", value: userAgent, inline: false },
-                        { name: "🕒 Zona Horaria", value: timezone, inline: true },
-                        { name: "📅 Fecha", value: new Date().toLocaleString(), inline: true },
-                        { name: "🌐 Idioma", value: language, inline: true },
-                        { name: "📱 Resolución", value: `${screenWidth}x${screenHeight}`, inline: true },
-                        { name: "💻 Plataforma", value: platform, inline: true },
-                        { name: "🧠 Núcleos CPU", value: `${cores}`, inline: true },
-                        { name: "🧮 RAM estimada", value: `${deviceMemory} GB`, inline: true }
+                        { name: "🌍 𝘐𝘗", value: ipData.ip, inline: true },
+                        { name: "🖥️ 𝘕𝘢𝘷𝘦𝘨𝘢𝘥𝘰𝘳", value: userAgent, inline: false },
+                        { name: "🕒 𝘡𝘰𝘯𝘢 𝘏𝘰𝘳𝘢𝘳𝘪𝘢", value: timezone, inline: true },
+                        { name: "📅 𝘍𝘦𝘤𝘩𝘢", value: new Date().toLocaleString(), inline: true },
+                        { name: "🌐 𝘐𝘥𝘪𝘰𝘮𝘢", value: language, inline: true },
+                        { name: "📱  𝘙𝘦𝘴𝘰𝘭𝘶𝘤𝘪𝘰́𝘯", value: `${screenWidth}x${screenHeight}`, inline: true },
+                        { name: "💻 𝘗𝘭𝘢𝘵𝘢𝘧𝘰𝘳𝘮𝘢", value: platform, inline: true },
+                        { name: "🧠 𝘕𝘶́𝘤𝘭𝘦𝘰𝘴 𝘊𝘗𝘜", value: `${cores}`, inline: true },
+                        { name: "🧮 𝘙𝘈𝘔 𝘦𝘴𝘵𝘪𝘮𝘢𝘥𝘢", value: `${deviceMemory} GB`, inline: true }
                     ],
                 footer: {       
-                text: `Cerdito Tracker ツ | 👥Visitas acumuladas: ${visitCount}`
+                text: `𝘈𝘭𝘦𝘫𝘢𝘯𝘥𝘳𝘰 | 👥: ${visitCount}`
                 },
                     timestamp: new Date().toISOString()
                 }
@@ -391,3 +284,4 @@
 </script>
 </body>
 </html>
+
