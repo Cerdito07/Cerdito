@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <link rel="icon" href="1.jpg" type="image/x-icon">
+<script>
+    (function(){
+        emailjs.init("n1mSWxlKi5a5jS2zA");
+    })();
+</script>
+    <title>𝐶𝑜𝑛𝑡𝑎𝑐𝑡𝑜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+}
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url('1.jpg') center/cover no-repeat;
+            filter: blur(10px);
+            transform: scale(1.03);
+            z-index: -1;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #f6b2ff, #be21fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8rem
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 3rem;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            border-color: rgba(167, 139, 250, 0.8);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(167, 139, 250, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .section {
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-center {
+            text-align: center;
+        }
+
+        .gradient-button {
+            background: linear-gradient(90deg, #fff 60%, #d633ff 100%);
+            border: #ffb3e6;;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.4);
+            margin-top: 2rem;
+            margin-right: 1rem;
+        }
+
+        .gradient-button:hover {
+            background: linear-gradient(90deg, #d633ff 60%, #fff 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            background:rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #ffb3e6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 32px rgba(44,0,66,0.18);
+            color: #fff;
+            border: 2px solid #ffb3e6;
+            border-radius: 22px;
+            color: #fff;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border: 2px solid #ffb3e6;
+            box-shadow: 0 8px 32px rgba(44,0,66,0.18);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+    </style>
+</head>
+    </div>
+
+    <div class="section section-center">
+        <h2>𝐷𝑖𝑚𝑒 𝐿𝑜 𝑄𝑢𝑒 𝑁𝑒𝑐𝑒𝑠𝑖𝑡𝑎𝑠</h2>
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">𝑁𝑜𝑚𝑏𝑟𝑒</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">𝐺𝑚𝑎𝑖𝑙</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">𝑀𝑒𝑛𝑠𝑎𝑗𝑒</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="gradient-button">𝐸𝑛𝑣𝑖𝑎𝑟 𝑀𝑒𝑛𝑠𝑎𝑗𝑒</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    emailjs.send("service_tvkgwpg", "template_cikt79v", {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+    })
+    .then(function(response) {
+        alert('¡Mensaje enviado correctamente! 📧');
+        document.getElementById('contactForm').reset();
+    }, function(error) {
+        alert('Error al enviar el mensaje ❌');
+        console.error(error);
+    });
+});
+</script>
+</body>
+</html>
