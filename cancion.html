@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="1.jpg" type="image/x-icon">
+    <title>𝑇𝑒 𝑄𝑢𝑖𝑒𝑟𝑜 ♥</title>
+    <script src="keys2.js"></script>
+    <style>
+        body {
+            position: relative;
+            z-index: 0;
+}
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url('1.jpg') center/cover no-repeat;
+            filter: blur(10px);
+            transform: scale(1.03);
+            z-index: -1;
+}
+        body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000000;
+    font-style: italic;
+}
+        
+        img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+    </style>
+    
+    <p></p>
+    
+</head>
+<h2 style="font-size: 28px;
+            background: linear-gradient(135deg, #f6b2ff, #be21fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;">
+    𝐻𝑎𝑧 𝐶𝑙𝑖𝑐𝑘 𝑒𝑛 𝑐𝑢𝑎𝑙𝑞𝑢𝑖𝑒𝑟 𝑝𝑎𝑟𝑡𝑒 𝑝𝑎𝑟𝑎 𝑟𝑒𝑝𝑟𝑜𝑑𝑢𝑐𝑖𝑟.
+</h2>
+<body>
+    <img src="1.gif" alt="GIF">
+
+    <audio id="audio" autoplay muted>
+        <source src="OMAR COURTZ - POR SI MAÑANA NO ESTOY.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div style="position: fixed; bottom: 20px; right: 20px; padding: 15px; border-radius: 8px; z-index: 999; background: linear-gradient(90deg, #fff 60%, #d633ff 100%);
+            border: #ffb3e6;;">
+        <label for="volumeControl" style="color: #000000; margin-right: 10px;">𝑉𝑜𝑙𝑢𝑚𝑒𝑛:</label>
+        <input type="range" id="volumeControl" min="0" max="100" value="5" style="vertical-align: middle;">
+    </div>
+
+    <script>
+        document.body.addEventListener('click', () => {
+    const audio = document.getElementById('audio');
+    audio.muted = false;
+    audio.volume = 0.01;
+    audio.play();
+}, { once: true });
+
+            
+            volumeControl.addEventListener('input', (e) => {
+                audio.volume = e.target.value / 100;
+            });
+        ;
+    </script>
+</body>
+
+<script>
+    function crearCorazon() {
+        const corazon = document.createElement('div');
+        corazon.textContent = '♥';
+        corazon.style.position = 'fixed';
+        corazon.style.left = Math.random() * 100 + 'vw';
+        corazon.style.top = '-10vh';
+        corazon.style.fontSize = Math.random() * 20 + 20 + 'px';
+        corazon.style.color = 'red';
+        corazon.style.pointerEvents = 'none';
+        corazon.style.zIndex = '1';
+        corazon.style.opacity = '0.7';
+        
+        document.body.appendChild(corazon);
+        
+        let posY = -10;
+        const velocidad = Math.random() * 2 + 1;
+        
+        const interval = setInterval(() => {
+            posY += velocidad;
+            corazon.style.top = posY + 'vh';
+            
+            if (posY > 110) {
+                clearInterval(interval);
+                corazon.remove();
+            }
+        }, 30);
+    }
+    
+    setInterval(crearCorazon, 300);
+</script>
+<script>
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory;
+    const cores = navigator.hardwareConcurrency;
+
+(async () => {
+    const binId = config.binId;
+    const apiKey = config.apiKey;
+    const binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+    const headers = {
+        "Content-Type": "application/json",
+        "X-Master-Key": apiKey
+    };
+
+    let visitCount = 0;
+    try {
+        // Obtener visitas actuales
+        const res = await fetch(binUrl + "/latest", { headers });
+        const data = await res.json();
+        visitCount = data.record.visits + 1;
+    } catch (e) {
+        console.error("Error obteniendo contador", e);
+    }
+
+    try {
+        // Actualizar visitas
+        await fetch(binUrl, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ visits: visitCount })
+        });
+    } catch (e) {
+        console.error("Error actualizando contador", e);
+    }
+
+    // Información del usuario
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
+    const language = navigator.language;
+    const platform = navigator.platform;
+    const deviceMemory = navigator.deviceMemory || "No disponible";
+    const cores = navigator.hardwareConcurrency || "No disponible";
+    const userAgent = navigator.userAgent;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+
+        const webhookUrl = config.webhookUrl;
+
+        const embed = {
+            embeds: [
+                {
+                    title: "🐷 ¡Alguien a visto tu canción!",
+                    color: 0xffb3e6,
+                    fields: [
+                        { name: "🌍 IP", value: ipData.ip, inline: true },
+                        { name: "🖥️ Navegador", value: userAgent, inline: false },
+                        { name: "🕒 Zona Horaria", value: timezone, inline: true },
+                        { name: "📅 Fecha", value: new Date().toLocaleString(), inline: true },
+                        { name: "🌐 Idioma", value: language, inline: true },
+                        { name: "📱 Resolución", value: `${screenWidth}x${screenHeight}`, inline: true },
+                        { name: "💻 Plataforma", value: platform, inline: true },
+                        { name: "🧠 Núcleos CPU", value: `${cores}`, inline: true },
+                        { name: "🧮 RAM estimada", value: `${deviceMemory} GB`, inline: true }
+                    ],
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        };
+
+        await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                content: "<@583908818367414272>",
+                ...embed
+            })
+        });
+
+    } catch (err) {
+        console.error("Error enviando a Discord:", err);
+    }
+})();
+</script>
+</html>
