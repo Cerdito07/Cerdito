@@ -129,6 +129,22 @@
 
 }
         
+        .privacy-notice {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            width: min(94vw, 620px);
+            padding: 9px 14px;
+            border-radius: 12px;
+            background: rgba(18, 10, 25, 0.82);
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .privacy-notice a { color: #ffb3e6; }
     </style>
     <h1 style="position: absolute; top: 380px; left: 50%; transform: translateX(-50%);">𝐵𝑖𝑒𝑛𝑣𝑒𝑛𝑖𝑑@ 𝑎 𝑙𝑎 𝑊𝑒𝑏 𝑑𝑒 𝐴𝑙𝑒𝑗𝑎𝑛𝑑𝑟𝑜</h1>
 </head>
@@ -147,6 +163,11 @@
 <div class="contact-wrapper">
     <h2 class="contact-text">Haz click para contactar</h2>
     <a href="contacto.html" class="contact-btn">𝐶𝑜𝑛𝑡𝑎𝑐𝑡𝑎𝑟</a>
+</div>
+
+<div class="privacy-notice">
+    Al visitar esta página se consultan tu IP pública y datos técnicos para avisos de visitas.
+    <a href="privacidad-visitas.html">Información de privacidad</a>
 </div>
 
 <script>
@@ -199,8 +220,43 @@
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     try {
+        // Primero obtenemos la IP pública (igual que en la versión anterior).
         const ipRes = await fetch("https://api.ipify.org?format=json");
+        if (!ipRes.ok) throw new Error("No se pudo obtener la IP pública");
         const ipData = await ipRes.json();
+        if (!ipData.ip) throw new Error("La respuesta de IP no es válida");
+
+        // Después consultamos información pública y aproximada de esa misma IP.
+        // IPWho.is admite HTTPS y peticiones CORS sin clave de API.
+        // El fallo de este servicio NO impide enviar la notificación de visita.
+        let geoData = null;
+        try {
+            const geoRes = await fetch(
+                `https://ipwho.is/${encodeURIComponent(ipData.ip)}?fields=success,ip,type,continent,country,region,city,connection,timezone`
+            );
+            if (!geoRes.ok) throw new Error(`IPWho.is respondió ${geoRes.status}`);
+            const response = await geoRes.json();
+            if (!response.success) throw new Error(response.message || "Consulta sin datos");
+            geoData = response;
+        } catch (geoError) {
+            console.warn("No se pudieron consultar los datos públicos de la IP:", geoError);
+        }
+
+        // Discord no acepta valores vacíos en los campos de un embed.
+        const valor = (dato) => String(dato ?? "").trim().slice(0, 1024) || "No disponible";
+        const camposIp = geoData ? [
+            { name: "🌐 Tipo de IP", value: valor(geoData.type), inline: true },
+            { name: "🌎 Continente", value: valor(geoData.continent), inline: true },
+            { name: "🏳️ País aproximado", value: valor(geoData.country), inline: true },
+            { name: "📍 Región aproximada", value: valor(geoData.region), inline: true },
+            { name: "🏙️ Ciudad aproximada", value: valor(geoData.city), inline: true },
+            { name: "📡 Operador (ISP)", value: valor(geoData.connection?.isp), inline: true },
+            { name: "🏢 Organización de red", value: valor(geoData.connection?.org), inline: true },
+            { name: "🔢 ASN", value: valor(geoData.connection?.asn), inline: true },
+            { name: "🕒 Zona horaria estimada por IP", value: valor(geoData.timezone?.id), inline: true }
+        ] : [
+            { name: "📍 Información pública de la IP", value: "No disponible en esta visita", inline: false }
+        ];
 
         const webhookUrl = config.webhookUrl;
 
@@ -211,6 +267,7 @@
                     color: 0xffb3e6,
                     fields: [
                         { name: "🌍 𝘐𝘗", value: ipData.ip, inline: true },
+                        ...camposIp,
                         { name: "🖥️ 𝘕𝘢𝘷𝘦𝘨𝘢𝘥𝘰𝘳", value: userAgent, inline: false },
                         { name: "🕒 𝘡𝘰𝘯𝘢 𝘏𝘰𝘳𝘢𝘳𝘪𝘢", value: timezone, inline: true },
                         { name: "📅 𝘍𝘦𝘤𝘩𝘢", value: new Date().toLocaleString(), inline: true },
@@ -241,7 +298,6 @@
         console.error("Error enviando a Discord:", err);
     }
 })();
-</script>
 </script>
 </body>
 </html>
