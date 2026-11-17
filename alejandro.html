@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>𝐴𝑙𝑒𝑗𝑎𝑛𝑑𝑟𝑜</title>
     <link rel="icon" href="1.jpg" type="image/x-icon">
-    <body>
     <script src="keys.js"></script>
-
-</body>
     <style>
             body {
             position: relative;
@@ -145,10 +142,17 @@
             line-height: 1.5;
         }
         .privacy-notice a { color: #ffb3e6; }
+        .privacy-notice { width: min(94vw, 730px); max-height: 39vh; overflow-y: auto; box-sizing: border-box; }
+        .analytics-actions, .privacy-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 7px; margin-top: 6px; }
+        .analytics-actions[hidden] { display: none; }
+        .privacy-notice button { padding: 6px 10px; border-radius: 8px; border: 1px solid #ffb3e6; background: #3e2349; color: white; cursor: pointer; font: inherit; }
+        .privacy-notice button:hover, .privacy-notice button:focus-visible { background: #674173; }
+        .privacy-notice button:disabled { opacity: .6; cursor: wait; }
+        #visit-status { display: block; color: #f5d7f5; font-size: 11px; padding-top: 3px; }
     </style>
-    <h1 style="position: absolute; top: 380px; left: 50%; transform: translateX(-50%);">𝐵𝑖𝑒𝑛𝑣𝑒𝑛𝑖𝑑@ 𝑎 𝑙𝑎 𝑊𝑒𝑏 𝑑𝑒 𝐴𝑙𝑒𝑗𝑎𝑛𝑑𝑟𝑜</h1>
 </head>
 <body>
+    <h1 style="position: absolute; top: 380px; left: 50%; transform: translateX(-50%);">𝐵𝑖𝑒𝑛𝑣𝑒𝑛𝑖𝑑@ 𝑎 𝑙𝑎 𝑊𝑒𝑏 𝑑𝑒 𝐴𝑙𝑒𝑗𝑎𝑛𝑑𝑟𝑜</h1>
     <div class="container">
     <p>𝑅𝑒𝑑𝑒𝑠</p>
     <div class="buttons">
@@ -165,139 +169,20 @@
     <a href="contacto.html" class="contact-btn">𝐶𝑜𝑛𝑡𝑎𝑐𝑡𝑎𝑟</a>
 </div>
 
-<div class="privacy-notice">
-    Al visitar esta página se consultan tu IP pública y datos técnicos para avisos de visitas.
-    <a href="privacidad-visitas.html">Información de privacidad</a>
-</div>
+<section class="privacy-notice" id="visit-privacy-notice" aria-label="Privacidad de visitas">
+    <div>La web envía avisos técnicos de visita a Discord, incluyendo IP y ubicación <strong>aproximada</strong>.
+    Las estadísticas de interacción son opcionales y la ubicación del dispositivo solo se consulta si tú lo autorizas.
+    <a href="privacidad-visitas.html">Información de privacidad</a></div>
+    <div class="analytics-actions" id="analytics-actions">
+        <button id="allow-analytics" type="button">Permitir estadísticas</button>
+        <button id="reject-analytics" type="button">Rechazar estadísticas</button>
+    </div>
+    <div class="privacy-actions">
+        <button id="share-location" type="button">Compartir ubicación precisa (opcional)</button>
+    </div>
+    <small id="visit-status" role="status" aria-live="polite"></small>
+</section>
 
-<script>
-    const screenWidth = screen.width;
-    const screenHeight = screen.height;
-    const language = navigator.language;
-    const platform = navigator.platform;
-    const deviceMemory = navigator.deviceMemory;
-    const cores = navigator.hardwareConcurrency;
-
-(async () => {
-    const binId = config.binId;
-    const apiKey = config.apiKey;
-    const binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
-
-    const headers = {
-        "Content-Type": "application/json",
-        "X-Master-Key":  apiKey
-    };
-
-    let visitCount = 0;
-    try {
-        // Obtener visitas actuales
-        const res = await fetch(binUrl + "/latest", { headers });
-        const data = await res.json();
-        visitCount = data.record.visits + 1;
-    } catch (e) {
-        console.error("Error obteniendo contador", e);
-    }
-
-    try {
-        // Actualizar visitas
-        await fetch(binUrl, {
-            method: "PUT",
-            headers,
-            body: JSON.stringify({ visits: visitCount })
-        });
-    } catch (e) {
-        console.error("Error actualizando contador", e);
-    }
-
-    // Información del usuario
-    const screenWidth = screen.width;
-    const screenHeight = screen.height;
-    const language = navigator.language;
-    const platform = navigator.platform;
-    const deviceMemory = navigator.deviceMemory || "No disponible";
-    const cores = navigator.hardwareConcurrency || "No disponible";
-    const userAgent = navigator.userAgent;
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    try {
-        // Primero obtenemos la IP pública (igual que en la versión anterior).
-        const ipRes = await fetch("https://api.ipify.org?format=json");
-        if (!ipRes.ok) throw new Error("No se pudo obtener la IP pública");
-        const ipData = await ipRes.json();
-        if (!ipData.ip) throw new Error("La respuesta de IP no es válida");
-
-        // Después consultamos información pública y aproximada de esa misma IP.
-        // IPWho.is admite HTTPS y peticiones CORS sin clave de API.
-        // El fallo de este servicio NO impide enviar la notificación de visita.
-        let geoData = null;
-        try {
-            const geoRes = await fetch(
-                `https://ipwho.is/${encodeURIComponent(ipData.ip)}?fields=success,ip,type,continent,country,region,city,connection,timezone`
-            );
-            if (!geoRes.ok) throw new Error(`IPWho.is respondió ${geoRes.status}`);
-            const response = await geoRes.json();
-            if (!response.success) throw new Error(response.message || "Consulta sin datos");
-            geoData = response;
-        } catch (geoError) {
-            console.warn("No se pudieron consultar los datos públicos de la IP:", geoError);
-        }
-
-        // Discord no acepta valores vacíos en los campos de un embed.
-        const valor = (dato) => String(dato ?? "").trim().slice(0, 1024) || "No disponible";
-        const camposIp = geoData ? [
-            { name: "🌐 Tipo de IP", value: valor(geoData.type), inline: true },
-            { name: "🌎 Continente", value: valor(geoData.continent), inline: true },
-            { name: "🏳️ País aproximado", value: valor(geoData.country), inline: true },
-            { name: "📍 Región aproximada", value: valor(geoData.region), inline: true },
-            { name: "🏙️ Ciudad aproximada", value: valor(geoData.city), inline: true },
-            { name: "📡 Operador (ISP)", value: valor(geoData.connection?.isp), inline: true },
-            { name: "🏢 Organización de red", value: valor(geoData.connection?.org), inline: true },
-            { name: "🔢 ASN", value: valor(geoData.connection?.asn), inline: true },
-            { name: "🕒 Zona horaria estimada por IP", value: valor(geoData.timezone?.id), inline: true }
-        ] : [
-            { name: "📍 Información pública de la IP", value: "No disponible en esta visita", inline: false }
-        ];
-
-        const webhookUrl = config.webhookUrl;
-
-        const embed = {
-            embeds: [
-                {
-                    title: "🐷 𝘕𝘶𝘦𝘷𝘰 𝘷𝘪𝘴𝘪𝘵𝘢𝘯𝘵𝘦 𝘦𝘯 𝘭𝘢 𝘸𝘦𝘣 𝘥𝘦𝘭 𝘈𝘭𝘦𝘫𝘢𝘯𝘥𝘳𝘰",
-                    color: 0xffb3e6,
-                    fields: [
-                        { name: "🌍 𝘐𝘗", value: ipData.ip, inline: true },
-                        ...camposIp,
-                        { name: "🖥️ 𝘕𝘢𝘷𝘦𝘨𝘢𝘥𝘰𝘳", value: userAgent, inline: false },
-                        { name: "🕒 𝘡𝘰𝘯𝘢 𝘏𝘰𝘳𝘢𝘳𝘪𝘢", value: timezone, inline: true },
-                        { name: "📅 𝘍𝘦𝘤𝘩𝘢", value: new Date().toLocaleString(), inline: true },
-                        { name: "🌐 𝘐𝘥𝘪𝘰𝘮𝘢", value: language, inline: true },
-                        { name: "📱  𝘙𝘦𝘴𝘰𝘭𝘶𝘤𝘪𝘰́𝘯", value: `${screenWidth}x${screenHeight}`, inline: true },
-                        { name: "💻 𝘗𝘭𝘢𝘵𝘢𝘧𝘰𝘳𝘮𝘢", value: platform, inline: true },
-                        { name: "🧠 𝘕𝘶́𝘤𝘭𝘦𝘰𝘴 𝘊𝘗𝘜", value: `${cores}`, inline: true },
-                        { name: "🧮 𝘙𝘈𝘔 𝘦𝘴𝘵𝘪𝘮𝘢𝘥𝘢", value: `${deviceMemory} GB`, inline: true }
-                    ],
-                footer: {       
-                text: `𝘈𝘭𝘦𝘫𝘢𝘯𝘥𝘳𝘰 | 👥: ${visitCount}`
-                },
-                    timestamp: new Date().toISOString()
-                }
-            ]
-        };
-
-        await fetch(webhookUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                content: "<@583908818367414272>",
-                ...embed
-            })
-        });
-
-    } catch (err) {
-        console.error("Error enviando a Discord:", err);
-    }
-})();
-</script>
+<script src="visitas-discord.js" defer></script>
 </body>
 </html>
